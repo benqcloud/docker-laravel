@@ -77,8 +77,8 @@ jobs:
           file: ${{ matrix.context }}/Dockerfile
           push: true
           tags: ${{ steps.meta.outputs.tags }}
-          cache-from: type=registry,ref=${{ steps.meta.outputs.tags }}
-          cache-to: type=inline
+          # cache-from: type=registry,ref=${{ steps.meta.outputs.tags }}
+          # cache-to: type=inline
 
       # Sign the resulting Docker image digest except on PRs.
       # This will only write to the public Rekor transparency log when the Docker
