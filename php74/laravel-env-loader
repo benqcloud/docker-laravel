@@ -1,0 +1,29 @@
+#!/bin/bash
+set -e
+
+: "${LARAVEL_HOME_DIR:=/var/www/html}"
+: "${LARAVEL_ENV_CONFIG:=.env.config}"
+: "${LARAVEL_ENV_EXAMPLE:=.env.example}"
+: "${LARAVEL_ENV:=.env}"
+
+read_properties()
+{
+    file="$1"
+    while IFS="=" read -r key value; do
+        case "$key" in
+            '') echo "" ;;
+            '#'*) ;;
+            *)
+                echo $key=\$\{$key\}
+        esac
+    done < "$file"
+}
+
+if test -f "$LARAVEL_HOME_DIR/$LARAVEL_ENV_EXAMPLE"; then
+    # Create LARAVEL_ENV_CONFIG from LARAVEL_ENV_EXAMPLE
+    read_properties $LARAVEL_HOME_DIR/$LARAVEL_ENV_EXAMPLE > $LARAVEL_HOME_DIR/$LARAVEL_ENV_CONFIG
+    # Create LARAVEL_ENV from LARAVEL_ENV_CONFIG
+    echo -e "$(eval "echo -e \"`<$LARAVEL_HOME_DIR/$LARAVEL_ENV_CONFIG`\"")" > $LARAVEL_HOME_DIR/$LARAVEL_ENV
+    # Change owner group of LARAVEL_ENV
+    chown www-data:www-data $LARAVEL_HOME_DIR/$LARAVEL_ENV
+fi
