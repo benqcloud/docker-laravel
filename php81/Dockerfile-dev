@@ -15,7 +15,7 @@ RUN apt-get update \
     && docker-php-ext-install gd intl opcache sockets zip \
     # LDAP extension
     && apt-get install -y --no-install-recommends libldap2-dev \
-    && docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu/ \
+    && docker-php-ext-configure ldap --with-libdir=lib/$(uname -m)-linux-gnu/ \
     && docker-php-ext-install ldap \
     # MongoDB extension
     && pecl install "mongodb-${MONGODB_DRIVER_VERSION}"\
