@@ -25,6 +25,8 @@ RUN apt-get update \
     && docker-php-ext-enable redis \
     # Enable apache2 module: headers, rewrite
     && a2enmod headers && a2enmod rewrite \
+    # Prepare php.ini
+    && cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini \
     && apt-get -y autoremove \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
