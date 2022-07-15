@@ -1,9 +1,9 @@
-FROM php:8.1-apache-bullseye
+FROM php:7.1-cli-buster
 
 LABEL maintainer="Richard Ting"
 
-ARG MONGODB_DRIVER_VERSION=1.12.1
-ARG NODE_VERSION=16
+ARG MONGODB_DRIVER_VERSION=1.9.1
+ARG NODE_VERSION=12
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -22,14 +22,10 @@ RUN apt-get update \
     && docker-php-ext-enable mongodb \
     # Redis extension
     && pecl install redis \
-    && docker-php-ext-enable redis \
-    # Enable apache2 module: headers, rewrite
     && a2enmod headers && a2enmod rewrite \
     && apt-get -y autoremove \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-COPY conf/apache2/000-default.conf /etc/apache2/sites-available/000-default.conf
 
 ARG PHP_COMPOSER_VERSION=2
 
