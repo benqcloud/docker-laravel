@@ -16,7 +16,8 @@ env:
   REGISTRY: ghcr.io
   # github.repository as <account>/<repo>
   IMAGE_NAME: ${{ github.repository }}
-  TAG_NAME: php74-dev
+  PHP_NAME: php74
+  TAG_NAME: dev
 
 
 jobs:
@@ -54,10 +55,10 @@ jobs:
         id: build-and-push
         uses: docker/build-push-action@v3
         with:
-          context: ${{ env.TAG_NAME }}/cli
-          file: ${{ env.TAG_NAME }}/cli/Dockerfile
+          context: ${{ env.PHP_NAME }}/cli
+          file: ${{ env.PHP_NAME }}/cli/Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.TAG_NAME }}
-          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.TAG_NAME }}
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.PHP_NAME }}-${{ env.TAG_NAME }}
+          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.PHP_NAME }}-${{ env.TAG_NAME }}
           cache-to: type=inline
