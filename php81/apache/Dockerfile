@@ -32,6 +32,3 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 COPY conf/apache2/000-default.conf /etc/apache2/sites-available/000-default.conf
-COPY laravel-env-loader /usr/local/bin/
-
-CMD ["/bin/bash", "-c", "laravel-env-loader && apache2-foreground"]
