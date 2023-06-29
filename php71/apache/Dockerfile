@@ -1,4 +1,4 @@
-FROM php:7.1-apache-buster
+FROM php:7.1.33-apache-buster
 
 LABEL maintainer="Richard Ting"
 

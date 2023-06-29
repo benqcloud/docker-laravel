@@ -1,4 +1,4 @@
-FROM php:7.4-cli-bullseye
+FROM php:7.4.33-cli-bullseye
 
 LABEL maintainer="Richard Ting"
 

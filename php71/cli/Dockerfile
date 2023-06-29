@@ -1,4 +1,4 @@
-FROM php:7.1-cli-buster
+FROM php:7.1.33-cli-buster
 
 LABEL maintainer="Richard Ting"
 

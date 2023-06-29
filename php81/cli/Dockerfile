@@ -1,4 +1,4 @@
-FROM php:8.1-cli-bullseye
+FROM php:8.1.20-cli-bookworm
 
 LABEL maintainer="Richard Ting"
 
