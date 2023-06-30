@@ -34,7 +34,7 @@ ARG PHP_COMPOSER_VERSION=2
 RUN curl -sS https://getcomposer.org/installer | php -- --$PHP_COMPOSER_VERSION --install-dir=/usr/bin/ --filename=composer \
     && curl -sL https://deb.nodesource.com/setup_$NODE_VERSION.x | bash - \
     && apt-get update \
-    && NODE_PACKAGE_VERSION=$(apt list -a nodejs 2>/dev/null | grep $NODE_VERSION | awk '{print $2}') \
+    && NODE_PACKAGE_VERSION=$(apt list -a nodejs 2>/dev/null | grep "nodesource" | awk '{print $2}') \
     && apt-get install -y nodejs=$NODE_PACKAGE_VERSION \
     && curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
     && echo "deb https://dl.yarnpkg.com/debian/ stable main" > /etc/apt/sources.list.d/yarn.list \
