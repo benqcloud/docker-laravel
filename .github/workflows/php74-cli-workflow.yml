@@ -1,4 +1,4 @@
-name: php71
+name: php74-cli
 
 # This workflow uses actions that are not certified by GitHub.
 # They are provided by a third-party and are governed by
@@ -6,10 +6,6 @@ name: php71
 # documentation.
 
 on:
-  push:
-    branches: [ main ]
-    # Publish semver tags as releases.
-    tags: [ 'v*.*.*' ]
   workflow_dispatch:
 
 env:
@@ -17,7 +13,9 @@ env:
   REGISTRY: ghcr.io
   # github.repository as <account>/<repo>
   IMAGE_NAME: ${{ github.repository }}
-  TAG_NAME: php71
+  PHP_BRANCH: 7.4
+  PHP_VERSION: 7.4.33
+  PHP_VARIANT: cli
 
 
 jobs:
@@ -55,10 +53,10 @@ jobs:
         id: build-and-push
         uses: docker/build-push-action@v3
         with:
-          context: ${{ env.TAG_NAME }}/apache
-          file: ${{ env.TAG_NAME }}/apache/Dockerfile
+          context: ${{ env.PHP_NAME }}/cli
+          file: ${{ env.PHP_NAME }}/cli/Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.TAG_NAME }}
-          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.TAG_NAME }}
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:php-${{ env.PHP_VERSION }}-${{ env.PHP_VARIANT }} ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:php-${{ env.PHP_BRANCH }}-${{ env.PHP_VARIANT }}
+          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:php-${{ env.PHP_BRANCH }}-${{ env.PHP_VARIANT }}
           cache-to: type=inline
