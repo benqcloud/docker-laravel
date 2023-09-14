@@ -17,7 +17,7 @@ env:
   PHP_BRANCH: 7.1
   PHP_VERSION: 7.1.33
   PHP_VARIANT: cli
-
+  FOLDER: php71
 
 jobs:
   build-and-push-image:

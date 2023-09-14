@@ -17,6 +17,7 @@ env:
   PHP_BRANCH: 8.1
   PHP_VERSION: 8.1.23
   PHP_VARIANT: cli
+  FOLDER: php81
 
 jobs:
   build-and-push-image:
@@ -59,8 +60,8 @@ jobs:
         id: build-and-push
         uses: docker/build-push-action@v5
         with:
-          context: ${{ env.PHP_NAME }}/cli
-          file: ${{ env.PHP_NAME }}/cli/Dockerfile
+          context: ${{ env.FOLDER }}/cli
+          file: ${{ env.FOLDER }}/cli/Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
