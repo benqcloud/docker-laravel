@@ -3,6 +3,7 @@ FROM php:7.1.33-cli-buster
 LABEL maintainer="Richard Ting"
 
 ARG MONGODB_DRIVER_VERSION=1.9.1
+ARG REDIS_DRIVER_VERSION=5.3.7
 ARG NODE_VERSION=12
 
 ENV DEBIAN_FRONTEND noninteractive
@@ -21,7 +22,7 @@ RUN apt-get update \
     && pecl install "mongodb-${MONGODB_DRIVER_VERSION}"\
     && docker-php-ext-enable mongodb \
     # Redis extension
-    && pecl install redis \
+    && pecl install "redis-${REDIS_DRIVER_VERSION}" \
     && docker-php-ext-enable redis \
     # Prepare php.ini
     && cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini \
