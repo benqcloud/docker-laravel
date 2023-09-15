@@ -1,12 +1,12 @@
 # [docker-laravel](https://github.com/benqcloud/docker-laravel)
 
-![php71-workflow](https://github.com/benqcloud/docker-laravel/actions/workflows/php71-workflow.yml/badge.svg)
-![php74-workflow](https://github.com/benqcloud/docker-laravel/actions/workflows/php74-workflow.yml/badge.svg)
-![php81-workflow](https://github.com/benqcloud/docker-laravel/actions/workflows/php81-workflow.yml/badge.svg)
+[![php71-apache](https://github.com/benqcloud/docker-laravel/actions/workflows/php71-apache-workflow.yml/badge.svg)](https://github.com/benqcloud/docker-laravel/actions/workflows/php71-apache-workflow.yml)
+[![php74-apache](https://github.com/benqcloud/docker-laravel/actions/workflows/php74-apache-workflow.yml/badge.svg)](https://github.com/benqcloud/docker-laravel/actions/workflows/php74-apache-workflow.yml)
+[![php81-apache](https://github.com/benqcloud/docker-laravel/actions/workflows/php81-apache-workflow.yml/badge.svg)](https://github.com/benqcloud/docker-laravel/actions/workflows/php81-apache-workflow.yml)
 
-![php71-dev-workflow](https://github.com/benqcloud/docker-laravel/actions/workflows/php71-dev-workflow.yml/badge.svg)
-![php74-dev-workflow](https://github.com/benqcloud/docker-laravel/actions/workflows/php74-dev-workflow.yml/badge.svg)
-![php81-dev-workflow](https://github.com/benqcloud/docker-laravel/actions/workflows/php81-dev-workflow.yml/badge.svg)
+[![php71-cli](https://github.com/benqcloud/docker-laravel/actions/workflows/php71-cli-workflow.yml/badge.svg)](https://github.com/benqcloud/docker-laravel/actions/workflows/php71-cli-workflow.yml)
+[![php74-cli](https://github.com/benqcloud/docker-laravel/actions/workflows/php74-cli-workflow.yml/badge.svg)](https://github.com/benqcloud/docker-laravel/actions/workflows/php74-cli-workflow.yml)
+[![php81-cli](https://github.com/benqcloud/docker-laravel/actions/workflows/php81-cli-workflow.yml/badge.svg)](https://github.com/benqcloud/docker-laravel/actions/workflows/php81-cli-workflow.yml)
 
 ## Supported Architectures
 
@@ -30,7 +30,7 @@ version: '3.9'
 
 services:
     laravel:
-        image: ghcr.io/benqcloud/docker-laravel:php81-dev
+        image: ghcr.io/benqcloud/docker-laravel:php-8.1-cli
         user: 1000:1000 # optional
         volumes:
             - ${PWD}:/var/www/html
@@ -110,7 +110,7 @@ docker run --rm \
     -v $(pwd):/var/www/html \
     -w /var/www/html \
     -p 80:80
-    ghcr.io/benqcloud/docker-laravel:php81-dev \
+    ghcr.io/benqcloud/docker-laravel:php-8.1-cli \
     php artisan serve --host=0.0.0.0 --port=80
 ```
 
@@ -126,7 +126,7 @@ COPY . /usr/src/app
 RUN composer install --optimize-autoloader --no-dev --ignore-platform-reqs
 
 ### runtime stage
-FROM ghcr.io/benqcloud/docker-laravel:php81
+FROM ghcr.io/benqcloud/docker-laravel:php-8.1-apache
 
 WORKDIR /var/www/html
 
