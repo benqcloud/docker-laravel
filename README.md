@@ -1,5 +1,7 @@
 # [docker-laravel](https://github.com/benqcloud/docker-laravel)
 
+[![php81-fpm](https://github.com/benqcloud/docker-laravel/actions/workflows/php81-fpm-workflow.yml/badge.svg)](https://github.com/benqcloud/docker-laravel/actions/workflows/php81-fpm-workflow.yml)
+
 [![php71-apache](https://github.com/benqcloud/docker-laravel/actions/workflows/php71-apache-workflow.yml/badge.svg)](https://github.com/benqcloud/docker-laravel/actions/workflows/php71-apache-workflow.yml)
 [![php74-apache](https://github.com/benqcloud/docker-laravel/actions/workflows/php74-apache-workflow.yml/badge.svg)](https://github.com/benqcloud/docker-laravel/actions/workflows/php74-apache-workflow.yml)
 [![php81-apache](https://github.com/benqcloud/docker-laravel/actions/workflows/php81-apache-workflow.yml/badge.svg)](https://github.com/benqcloud/docker-laravel/actions/workflows/php81-apache-workflow.yml)
@@ -20,9 +22,6 @@
 ### docker-compose (recommended)
 
 - Download laravel project (Different laravel version may need different docker image, please check it too)
-- Host OS
-    - Linux: should use correct `UID` & `GID` for `user` config
-    - Windows: remove `user` config
 
 ```docker-compose
 ---
@@ -30,21 +29,31 @@ version: '3.9'
 
 services:
     laravel:
-        image: ghcr.io/benqcloud/docker-laravel:php-8.1-cli
-        user: 1000:1000 # optional
+        image: ghcr.io/benqcloud/docker-laravel:php-8.1-apache
         volumes:
             - ${PWD}:/var/www/html
         working_dir: /var/www/html
-        command: bash -c "composer install &&
-            php artisan serve --host=0.0.0.0 --port=80"
+        command: bash -c "groupmod -g $GID www-data &&
+            usermod -u $UID -g $GID www-data &&
+            apache2-foreground"
         depends_on:
             - mysql80
         labels:
             - "traefik.enable=true"
-            - "traefik.http.routers.laravel.rule=Host(`laravel.benq.localhost`)"
+            - "traefik.http.routers.laravel.rule=Host(`laravel.benq.test`)"
             - "traefik.http.services.laravel.loadbalancer.server.port=80"
             - "traefik.http.routers.laravel.entrypoints=websecure"
             - "traefik.http.routers.laravel.tls.certresolver=myresolver"
+        networks:
+            - benq
+
+    php-composer:
+        image: ghcr.io/benqcloud/composer:php-8.1
+        user: 1000:1000 # optional
+        volumes:
+            - ${PWD}:/var/www/html
+        working_dir: /var/www/html
+        command: bash -c "composer install --optimize-autoloader --no-dev --ignore-platform-reqs"
         networks:
             - benq
 
@@ -65,7 +74,7 @@ services:
             ADMINER_PLUGINS: dump-json slugify
         labels:
             - "traefik.enable=true"
-            - "traefik.http.routers.adminer.rule=Host(`adminer.benq.localhost`)"
+            - "traefik.http.routers.adminer.rule=Host(`adminer.benq.test`)"
             - "traefik.http.services.adminer.loadbalancer.server.port=8080"
             - "traefik.http.routers.adminer.entrypoints=websecure"
             - "traefik.http.routers.adminer.tls.certresolver=myresolver"
@@ -106,19 +115,21 @@ networks:
 
 ```bash
 docker run --rm \
-    -u "$(id -u):$(id -g)" \
     -v $(pwd):/var/www/html \
     -w /var/www/html \
-    -p 80:80
-    ghcr.io/benqcloud/docker-laravel:php-8.1-cli \
-    php artisan serve --host=0.0.0.0 --port=80
+    -p 80:80 \
+    --detach \
+    ghcr.io/benqcloud/docker-laravel:php-8.1-apache \
+    bash -c "groupmod -g $GID www-data && \
+    usermod -u $UID -g $GID www-data && \
+    apache2-foreground"
 ```
 
 ### Dockerfile
 
 ```dockerfile
 ### builder stage
-FROM ghcr.io/benqcloud/composer:php81 AS composer-builder
+FROM ghcr.io/benqcloud/composer:php-8.1 AS composer-builder
 
 WORKDIR /usr/src/app
 
