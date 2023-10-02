@@ -1,4 +1,4 @@
-FROM php:8.1.23-fpm-bookworm
+FROM php:8.1.24-fpm-bookworm
 
 LABEL maintainer="Richard Ting"
 
@@ -25,6 +25,11 @@ RUN apt-get update \
     && docker-php-ext-enable redis \
     # Prepare php.ini
     && cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini \
+    # Install nginx
+    && apt-get install -y --no-install-recommends nginx \
     && apt-get -y autoremove \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+COPY conf/nginx/nginx.conf /etc/nginx/nginx.conf
+COPY conf/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
