@@ -44,8 +44,7 @@ services:
             - "traefik.http.services.laravel.loadbalancer.server.port=80"
             - "traefik.http.routers.laravel.entrypoints=websecure"
             - "traefik.http.routers.laravel.tls.certresolver=myresolver"
-        networks:
-            - benq
+        network_node: bridge
 
     php-composer:
         image: ghcr.io/benqcloud/composer:php-8.1
@@ -54,8 +53,7 @@ services:
             - ${PWD}:/var/www/html
         working_dir: /var/www/html
         command: bash -c "composer install --optimize-autoloader --no-dev --ignore-platform-reqs"
-        networks:
-            - benq
+        network_node: bridge
 
     mysql80:
         image: mysql:latest
@@ -63,8 +61,7 @@ services:
             - mysql-data:/var/lib/mysql
         environment:
             - MYSQL_ROOT_PASSWORD=example
-        networks:
-            - benq
+        network_node: bridge
 
     adminer:
         image: adminer:latest
@@ -78,8 +75,7 @@ services:
             - "traefik.http.services.adminer.loadbalancer.server.port=8080"
             - "traefik.http.routers.adminer.entrypoints=websecure"
             - "traefik.http.routers.adminer.tls.certresolver=myresolver"
-        networks:
-            - benq
+        network_node: bridge
 
     traefik:
         image: traefik:latest
@@ -100,15 +96,11 @@ services:
             - "8080:8080"
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock:ro
-        networks:
-            - benq
+        network_node: bridge
 
 volumes:
     mysql-data:
 
-networks:
-    benq:
-        driver: bridge
 ```
 
 ### docker-cli

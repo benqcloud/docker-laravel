@@ -1,0 +1,25 @@
+#!/bin/bash
+
+graceful_stop() {
+    echo "Gracefully stopping PHP-FPM and Nginx ..."
+    # Send a signal to PHP-FPM to gracefully stop
+    echo "Stopping PHP-FPM ..."
+    kill -s QUIT $(cat /var/run/php-fpm.pid)
+    # Send a signal to Nginx to gracefully stop
+    echo "Stopping Nginx ..."
+    nginx -s quit
+
+    echo "Stop complete."
+    exit 0
+}
+
+# Trap 'QUIT' signal to trigger graceful_stop
+trap 'graceful_stop' SIGQUIT
+
+# Start PHP-FPM in the background
+php-fpm -D
+
+# Start Nginx in the background
+nginx -g 'daemon on;'
+
+sleep infinity & wait
