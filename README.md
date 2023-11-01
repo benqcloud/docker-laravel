@@ -24,7 +24,6 @@
 - Download laravel project (Different laravel version may need different docker image, please check it too)
 
 ```docker-compose
----
 version: '3.9'
 
 services:
@@ -56,7 +55,7 @@ services:
         network_node: bridge
 
     mysql80:
-        image: mysql:latest
+        image: mysql:8.0
         volumes:
             - mysql-data:/var/lib/mysql
         environment:
@@ -105,6 +104,8 @@ volumes:
 
 ### docker-cli
 
+- Case 1: Local development
+
 ```bash
 docker run --rm \
     -v $(pwd):/var/www/html \
@@ -115,6 +116,18 @@ docker run --rm \
     bash -c "groupmod -g $GID www-data && \
     usermod -u $UID -g $GID www-data && \
     apache2-foreground"
+```
+
+- Case 2: Unit test
+
+```bash
+docker run --rm \
+    --user "$(id -u):$(id -g)" \
+    -e HOME=/var/www/html \
+    -v $(pwd):/var/www/html \
+    -w /var/www/html \
+    ghcr.io/benqcloud/docker-laravel:php-8.1-cli \
+    bash -c "composer install && php vendor/bin/phpunit"
 ```
 
 ### Dockerfile
