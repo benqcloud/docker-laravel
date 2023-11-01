@@ -1,9 +1,8 @@
-FROM php:8.1.24-apache-bookworm
+FROM php:8.1.25-apache-bookworm
 
 LABEL maintainer="Richard Ting"
 
 ARG MONGODB_DRIVER_VERSION=1.12.1
-ARG NODE_VERSION=16
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -32,3 +31,4 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 COPY conf/apache2/000-default.conf /etc/apache2/sites-available/000-default.conf
+COPY conf/php/conf.d/laravel.ini /usr/local/etc/php/conf.d/laravel.ini

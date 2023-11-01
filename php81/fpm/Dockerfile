@@ -1,9 +1,8 @@
-FROM php:8.1.24-fpm-bookworm
+FROM php:8.1.25-fpm-bookworm
 
 LABEL maintainer="Richard Ting"
 
 ARG MONGODB_DRIVER_VERSION=1.12.1
-ARG NODE_VERSION=16
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -36,6 +35,7 @@ RUN apt-get update \
 
 COPY conf/nginx/nginx.conf /etc/nginx/nginx.conf
 COPY conf/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
+COPY conf/php/conf.d/laravel.ini /usr/local/etc/php/conf.d/laravel.ini
 COPY conf/php-fpm.d/pid-docker.conf /usr/local/etc/php-fpm.d/pid-docker.conf
 COPY nginx-php-fpm-foreground /usr/local/bin
 
