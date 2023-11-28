@@ -1,4 +1,4 @@
-FROM php:8.1.25-fpm-bookworm
+FROM php:8.1.26-fpm-bookworm
 
 LABEL maintainer="Richard Ting"
 
@@ -23,7 +23,11 @@ RUN apt-get update \
     && pecl install redis \
     && docker-php-ext-enable redis \
     # Prepare php.ini
-    && cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini \
+    && RUN sed -i '4 i if [ "$APP_ENV" = "production" ]; then\n\
+    ln -sf /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini\n\
+else\n\
+    ln -sf /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini\n\
+fi\n' /usr/local/bin/docker-php-entrypoint \
     # Install nginx
     && apt-get install -y --no-install-recommends nginx \
     # forward nginx request and error logs to docker log collector
