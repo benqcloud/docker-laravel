@@ -25,11 +25,7 @@ RUN apt-get update \
     && pecl install "redis-${REDIS_DRIVER_VERSION}" \
     && docker-php-ext-enable redis \
     # Prepare php.ini
-    && sed -i '4 i if [ "$PHP_ENV" = "development" ]; then\n\
-    ln -sf /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini\n\
-else\n\
-    ln -sf /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini\n\
-fi\n' /usr/local/bin/docker-php-entrypoint \
+    && ln -sf /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini \
     && apt-get -y autoremove \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
