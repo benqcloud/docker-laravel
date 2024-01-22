@@ -2,7 +2,7 @@ FROM php:8.1.26-cli-bookworm
 
 LABEL maintainer="Richard Ting"
 
-ARG MONGODB_DRIVER_VERSION=1.12.1
+ARG MONGODB_DRIVER_VERSION=1.17.2
 ARG NODE_MAJOR=20
 
 ENV DEBIAN_FRONTEND noninteractive
