@@ -31,4 +31,5 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+COPY conf/apache2/security-headers.conf /etc/apache2/conf-enabled/security-headers.conf
 COPY conf/apache2/000-default.conf /etc/apache2/sites-available/000-default.conf
