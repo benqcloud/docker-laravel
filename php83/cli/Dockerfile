@@ -1,8 +1,8 @@
-FROM php:8.3.8-cli-bookworm
+FROM php:8.3.10-cli-bookworm
 
 LABEL maintainer="Richard Ting"
 
-ARG MONGODB_DRIVER_VERSION=1.17.2
+ARG MONGODB_DRIVER_VERSION=1.19.3
 ARG NODE_MAJOR=20
 
 ENV DEBIAN_FRONTEND noninteractive
