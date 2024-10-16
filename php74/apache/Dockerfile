@@ -3,7 +3,6 @@ FROM php:7.4.33-apache-bullseye
 LABEL maintainer="Richard Ting"
 
 ARG MONGODB_DRIVER_VERSION=1.12.1
-ARG NODE_VERSION=14
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -17,6 +16,9 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends libldap2-dev \
     && docker-php-ext-configure ldap --with-libdir=lib/$(uname -m)-linux-gnu/ \
     && docker-php-ext-install ldap \
+    # APCu extension
+    && pecl install apcu \
+    && docker-php-ext-enable apcu \
     # MongoDB extension
     && pecl install "mongodb-${MONGODB_DRIVER_VERSION}"\
     && docker-php-ext-enable mongodb \

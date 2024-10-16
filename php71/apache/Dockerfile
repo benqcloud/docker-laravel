@@ -4,7 +4,6 @@ LABEL maintainer="Richard Ting"
 
 ARG MONGODB_DRIVER_VERSION=1.9.1
 ARG REDIS_DRIVER_VERSION=5.3.7
-ARG NODE_VERSION=12
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -18,6 +17,9 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends libldap2-dev \
     && docker-php-ext-configure ldap --with-libdir=lib/$(uname -m)-linux-gnu/ \
     && docker-php-ext-install ldap \
+    # APCu extension
+    && pecl install apcu \
+    && docker-php-ext-enable apcu \
     # MongoDB extension
     && pecl install "mongodb-${MONGODB_DRIVER_VERSION}"\
     && docker-php-ext-enable mongodb \
