@@ -1,4 +1,4 @@
-name: php81-apache-dev
+name: php71-apache-dev
 
 # This workflow uses actions that are not certified by GitHub.
 # They are provided by a third-party and are governed by
@@ -14,10 +14,10 @@ env:
   DOCKERHUB_REGISTRY: docker.io
   # github.repository as <account>/<repo>
   IMAGE_NAME: ${{ github.repository }}
-  PHP_BRANCH: 8.1
-  PHP_VERSION: 8.1.29
+  PHP_BRANCH: 7.1
+  PHP_VERSION: 7.1.33
   PHP_VARIANT: apache-dev
-  FOLDER: php81
+  FOLDER: php71
 
 jobs:
   build-and-push-image:
