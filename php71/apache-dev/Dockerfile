@@ -4,9 +4,6 @@ ARG NODE_VERSION=12
 ARG PHP_COMPOSER_VERSION=2
 
 RUN apt-get update \
-    # xdebug extension
-    && pecl install xdebug \
-    && docker-php-ext-enable xdebug \
     # Install composer v2
     && curl -sS https://getcomposer.org/installer | php -- --$PHP_COMPOSER_VERSION --install-dir=/usr/bin/ --filename=composer \
     # Install Node.js 12
