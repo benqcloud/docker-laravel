@@ -1,6 +1,6 @@
 FROM benqcloud/docker-laravel:php-7.1-apache
 
-ARG NODE_MAJOR=12
+ARG NODE_VERSION=12
 ARG PHP_COMPOSER_VERSION=2
 
 RUN apt-get update \

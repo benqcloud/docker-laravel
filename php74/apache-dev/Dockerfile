@@ -1,6 +1,6 @@
 FROM benqcloud/docker-laravel:php-8.1-apache
 
-ARG NODE_MAJOR=14
+ARG NODE_VERSION=14
 ARG PHP_COMPOSER_VERSION=2
 
 RUN apt-get update \
