@@ -17,7 +17,7 @@ env:
   PHP_BRANCH: 8.3
   PHP_VERSION: 8.3.10
   PHP_VARIANT: apache-dev
-  FOLDER: php81
+  FOLDER: php83
 
 jobs:
   build-and-push-image:
