@@ -1,4 +1,4 @@
-FROM php:8.3.14-cli-bookworm
+FROM php:8.3.16-cli-bookworm
 
 LABEL maintainer="Richard Ting"
 
@@ -14,7 +14,11 @@ RUN apt-get update \
     # Laravel required extensions (ctype curl fileinfo json dom mbstring tokenizer xml extensions are already loaded)
     && docker-php-ext-install bcmath pdo_mysql \
     # BenQ app required extensions
-    && docker-php-ext-install gd intl opcache sockets zip pcntl \
+    && docker-php-ext-install intl opcache sockets zip pcntl \
+    # BenQ app required extension - gd with JPEG support
+    && apt-get install -y --no-install-recommends libjpeg-dev \
+    && docker-php-ext-configure gd --with-jpeg \
+    && docker-php-ext-install gd \
     # LDAP extension
     && apt-get install -y --no-install-recommends libldap2-dev \
     && docker-php-ext-configure ldap --with-libdir=lib/$(uname -m)-linux-gnu/ \
