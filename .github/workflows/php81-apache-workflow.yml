@@ -54,6 +54,14 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      - name: Increase Swap Space (Optional)
+        run: |
+          sudo fallocate -l 4G /swapfile
+          sudo chmod 600 /swapfile
+          sudo mkswap /swapfile
+          sudo swapon /swapfile
+          free -m
+
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
       - name: Build and push
@@ -71,3 +79,7 @@ jobs:
             ${{ env.IMAGE_NAME }}:php-${{ env.PHP_BRANCH }}-${{ env.PHP_VARIANT }}
           cache-from: type=registry,ref=${{ env.GITHUB_REGISTRY }}/${{ env.IMAGE_NAME }}:php-${{ env.PHP_BRANCH }}-${{ env.PHP_VARIANT }}
           cache-to: type=inline
+          build-args: |
+            MAKEFLAGS=-j2  # Limit parallel compilation jobs
+          memory: 4g  # Limit memory usage to 4GB
+          shm-size: 512m  # Shared memory size for builds
