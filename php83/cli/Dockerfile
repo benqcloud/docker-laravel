@@ -16,7 +16,7 @@ RUN apt-get update \
     # BenQ app required extensions
     && docker-php-ext-install intl opcache sockets zip pcntl \
     # BenQ app required extension - gd with JPEG support
-    && apt-get install -y --no-install-recommends libjpeg-turbo-progs libjpeg62-turbo-dev \
+    && apt-get install -y --no-install-recommends libjpeg-dev \
     && docker-php-ext-configure gd --with-jpeg \
     && docker-php-ext-install gd \
     # LDAP extension
