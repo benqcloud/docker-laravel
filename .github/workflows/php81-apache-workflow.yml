@@ -69,7 +69,5 @@ jobs:
             ${{ env.GITHUB_REGISTRY }}/${{ env.IMAGE_NAME }}:php-${{ env.PHP_BRANCH }}-${{ env.PHP_VARIANT }}
             ${{ env.IMAGE_NAME }}:php-${{ env.PHP_VERSION }}-${{ env.PHP_VARIANT }}
             ${{ env.IMAGE_NAME }}:php-${{ env.PHP_BRANCH }}-${{ env.PHP_VARIANT }}
-          build-args: |
-            BUILDKIT_MAX_PARALLELISM=1
           cache-from: type=registry,ref=${{ env.GITHUB_REGISTRY }}/${{ env.IMAGE_NAME }}:php-${{ env.PHP_BRANCH }}-${{ env.PHP_VARIANT }}
           cache-to: type=inline
