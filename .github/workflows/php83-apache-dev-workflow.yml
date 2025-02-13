@@ -69,5 +69,6 @@ jobs:
             ${{ env.GITHUB_REGISTRY }}/${{ env.IMAGE_NAME }}:php-${{ env.PHP_BRANCH }}-${{ env.PHP_VARIANT }}
             ${{ env.IMAGE_NAME }}:php-${{ env.PHP_VERSION }}-${{ env.PHP_VARIANT }}
             ${{ env.IMAGE_NAME }}:php-${{ env.PHP_BRANCH }}-${{ env.PHP_VARIANT }}
+          shm-size: 4g  # Shared memory size for builds
           cache-from: type=registry,ref=${{ env.GITHUB_REGISTRY }}/${{ env.IMAGE_NAME }}:php-${{ env.PHP_BRANCH }}-${{ env.PHP_VARIANT }}
           cache-to: type=inline
