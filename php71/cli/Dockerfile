@@ -6,7 +6,7 @@ ARG MONGODB_DRIVER_VERSION=1.9.1
 ARG REDIS_DRIVER_VERSION=5.3.7
 ARG NODE_VERSION=12
 
-ENV DEBIAN_FRONTEND noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends git zlib1g-dev curl libxml2-dev libpng-dev libssl-dev libzip-dev zip unzip \
