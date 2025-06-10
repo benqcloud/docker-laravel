@@ -2,7 +2,7 @@ FROM php:8.3.21-apache-bookworm
 
 LABEL maintainer="Richard Ting"
 
-ARG MONGODB_DRIVER_VERSION=2.1.0
+ARG MONGODB_DRIVER_VERSION=1.21.0
 
 ENV DEBIAN_FRONTEND=noninteractive
 
