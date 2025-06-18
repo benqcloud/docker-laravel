@@ -44,6 +44,8 @@ RUN apt-get update \
 
 COPY conf/nginx/nginx.conf /etc/nginx/nginx.conf
 COPY conf/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
+COPY conf/nginx/conf.d/security-headers.conf /etc/nginx/conf.d/security-headers.conf
+COPY conf/nginx/conf.d/server-identification.conf /etc/nginx/conf.d/server-identification.conf
 COPY conf/php/conf.d/laravel.ini /usr/local/etc/php/conf.d/laravel.ini
 COPY conf/php-fpm.d/pid-docker.conf /usr/local/etc/php-fpm.d/pid-docker.conf
 COPY nginx-php-fpm-foreground /usr/local/bin
