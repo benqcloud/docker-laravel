@@ -15,7 +15,7 @@ env:
   # github.repository as <account>/<repo>
   IMAGE_NAME: ${{ github.repository }}
   PHP_BRANCH: 8.1
-  PHP_VERSION: 8.1.32
+  PHP_VERSION: 8.1.33
   PHP_VARIANT: apache
   FOLDER: php81
 

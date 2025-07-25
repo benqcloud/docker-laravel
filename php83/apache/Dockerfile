@@ -1,4 +1,4 @@
-FROM php:8.3.21-apache-bookworm
+FROM php:8.3.23-apache-bookworm
 
 LABEL maintainer="Richard Ting"
 
