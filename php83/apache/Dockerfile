@@ -13,6 +13,7 @@ RUN apt-get update \
     # Laravel required extensions (ctype curl fileinfo json dom mbstring tokenizer xml extensions are already loaded)
     && docker-php-ext-install bcmath pdo_mysql \
     # BenQ app required extensions
+    && apt-get install -y --no-install-recommends libicu-dev \
     && docker-php-ext-install intl opcache sockets zip pcntl \
     # BenQ app required extension - gd with JPEG support
     && apt-get install -y --no-install-recommends libjpeg-dev \
