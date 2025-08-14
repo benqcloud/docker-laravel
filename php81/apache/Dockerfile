@@ -1,4 +1,4 @@
-FROM php:8.1.33-apache-bookworm
+FROM php:8.1.33-apache-trixie
 
 LABEL maintainer="Richard Ting"
 
@@ -35,9 +35,8 @@ RUN apt-get update \
     && a2enmod headers && a2enmod rewrite \
     # Prepare php.ini
     && ln -sf /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini \
-    && apt-get -y autoremove \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+    && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
+    && apt-get dist-clean
 
 COPY conf/apache2/security-headers.conf /etc/apache2/conf-enabled/security-headers.conf
 COPY conf/apache2/server-identification.conf /etc/apache2/conf-enabled/server-identification.conf

@@ -1,4 +1,4 @@
-FROM php:8.1.33-fpm-bookworm
+FROM php:8.1.33-fpm-trixie
 
 LABEL maintainer="Richard Ting"
 
@@ -38,9 +38,8 @@ RUN apt-get update \
     # forward nginx request and error logs to docker log collector
     && ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/nginx/error.log \
-    && apt-get -y autoremove \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+    && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
+    && apt-get dist-clean
 
 COPY conf/nginx/nginx.conf /etc/nginx/nginx.conf
 COPY conf/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf

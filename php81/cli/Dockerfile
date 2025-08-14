@@ -1,4 +1,4 @@
-FROM php:8.1.33-cli-bookworm
+FROM php:8.1.33-cli-trixie
 
 LABEL maintainer="Richard Ting"
 
@@ -34,9 +34,8 @@ RUN apt-get update \
     && docker-php-ext-enable redis \
     # Prepare php.ini
     && ln -sf /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini \
-    && apt-get -y autoremove \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+    && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
+    && apt-get dist-clean
 
 ARG PHP_COMPOSER_VERSION=2
 
@@ -47,10 +46,9 @@ RUN curl -sS https://getcomposer.org/installer | php -- --$PHP_COMPOSER_VERSION 
     && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list \
     && apt-get update \
     && apt-get install -y nodejs \
-    && curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
-    && echo "deb https://dl.yarnpkg.com/debian/ stable main" > /etc/apt/sources.list.d/yarn.list \
+    && curl -fsSL https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor -o /etc/apt/keyrings/yarnpkg.gpg \
+    && echo "deb [signed-by=/etc/apt/keyrings/yarnpkg.gpg] https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
     && apt-get update \
     && apt-get install -y yarn \
-    && apt-get -y autoremove \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+    && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
+    && apt-get dist-clean
