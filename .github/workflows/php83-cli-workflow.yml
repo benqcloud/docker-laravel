@@ -28,8 +28,10 @@ jobs:
         include:
           - platform: linux/amd64
             runner: ubuntu-latest
+            arch: amd64
           - platform: linux/arm64
             runner: ubuntu-24.04-arm64
+            arch: arm64
 
     permissions:
       contents: read
@@ -81,8 +83,8 @@ jobs:
           outputs: type=image,name=${{ env.GITHUB_REGISTRY }}/${{ env.IMAGE_NAME }},push-by-digest=true,name-canonical=true,push=true
           shm-size: 4g
           provenance: false
-          cache-from: type=registry,ref=${{ env.GITHUB_REGISTRY }}/${{ env.IMAGE_NAME }}:buildcache-php-${{ env.PHP_BRANCH }}-${{ env.PHP_VARIANT }}-${{ matrix.platform }}
-          cache-to: type=registry,ref=${{ env.GITHUB_REGISTRY }}/${{ env.IMAGE_NAME }}:buildcache-php-${{ env.PHP_BRANCH }}-${{ env.PHP_VARIANT }}-${{ matrix.platform }},mode=max
+          cache-from: type=registry,ref=${{ env.GITHUB_REGISTRY }}/${{ env.IMAGE_NAME }}:buildcache-php-${{ env.PHP_BRANCH }}-${{ env.PHP_VARIANT }}-${{ matrix.arch }}
+          cache-to: type=registry,ref=${{ env.GITHUB_REGISTRY }}/${{ env.IMAGE_NAME }}:buildcache-php-${{ env.PHP_BRANCH }}-${{ env.PHP_VARIANT }}-${{ matrix.arch }},mode=max
 
       - name: Export digest
         run: |
