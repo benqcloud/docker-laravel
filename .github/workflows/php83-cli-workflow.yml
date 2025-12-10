@@ -41,10 +41,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Docker QEMU
-        if: matrix.platform != 'linux/arm64'
-        uses: docker/setup-qemu-action@v3
-
       - name: Setup Docker buildx
         uses: docker/setup-buildx-action@v3
 
@@ -83,8 +79,8 @@ jobs:
           outputs: type=image,name=${{ env.GITHUB_REGISTRY }}/${{ env.IMAGE_NAME }},push-by-digest=true,name-canonical=true,push=true
           shm-size: 4g
           provenance: false
-          cache-from: type=registry,ref=${{ env.GITHUB_REGISTRY }}/${{ env.IMAGE_NAME }}:buildcache-php-${{ env.PHP_BRANCH }}-${{ env.PHP_VARIANT }}-${{ matrix.arch }}
-          cache-to: type=registry,ref=${{ env.GITHUB_REGISTRY }}/${{ env.IMAGE_NAME }}:buildcache-php-${{ env.PHP_BRANCH }}-${{ env.PHP_VARIANT }}-${{ matrix.arch }},mode=max
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
       - name: Export digest
         run: |
@@ -144,10 +140,20 @@ jobs:
             type=raw,value=php-${{ env.PHP_VERSION }}-${{ env.PHP_VARIANT }}
             type=raw,value=php-${{ env.PHP_BRANCH }}-${{ env.PHP_VARIANT }}
 
-      - name: Create manifest list and push
+      - name: Create manifest list and push to GitHub Registry
         working-directory: /tmp/digests
         run: |
-          docker buildx imagetools create $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") \
+          docker buildx imagetools create \
+            -t ${{ env.GITHUB_REGISTRY }}/${{ env.IMAGE_NAME }}:php-${{ env.PHP_VERSION }}-${{ env.PHP_VARIANT }} \
+            -t ${{ env.GITHUB_REGISTRY }}/${{ env.IMAGE_NAME }}:php-${{ env.PHP_BRANCH }}-${{ env.PHP_VARIANT }} \
+            $(printf '${{ env.GITHUB_REGISTRY }}/${{ env.IMAGE_NAME }}@sha256:%s ' *)
+
+      - name: Create manifest list and push to Docker Hub
+        working-directory: /tmp/digests
+        run: |
+          docker buildx imagetools create \
+            -t ${{ env.IMAGE_NAME }}:php-${{ env.PHP_VERSION }}-${{ env.PHP_VARIANT }} \
+            -t ${{ env.IMAGE_NAME }}:php-${{ env.PHP_BRANCH }}-${{ env.PHP_VARIANT }} \
             $(printf '${{ env.GITHUB_REGISTRY }}/${{ env.IMAGE_NAME }}@sha256:%s ' *)
 
       - name: Inspect image
