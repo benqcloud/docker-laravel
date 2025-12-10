@@ -2,7 +2,7 @@ FROM php:8.3.28-apache-trixie
 
 LABEL maintainer="Richard Ting"
 
-ARG MONGODB_DRIVER_VERSION=1.21.0
+ARG MONGODB_DRIVER_VERSION=1.21.2
 
 ENV DEBIAN_FRONTEND=noninteractive
 
