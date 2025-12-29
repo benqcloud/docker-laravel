@@ -1,16 +1,16 @@
 # [docker-laravel](https://github.com/benqcloud/docker-laravel)
 
-[![php81-fpm](https://github.com/benqcloud/docker-laravel/actions/workflows/php81-fpm-workflow.yml/badge.svg)](https://github.com/benqcloud/docker-laravel/actions/workflows/php81-fpm-workflow.yml)
-
 [![php71-apache](https://github.com/benqcloud/docker-laravel/actions/workflows/php71-apache-workflow.yml/badge.svg)](https://github.com/benqcloud/docker-laravel/actions/workflows/php71-apache-workflow.yml)
 [![php74-apache](https://github.com/benqcloud/docker-laravel/actions/workflows/php74-apache-workflow.yml/badge.svg)](https://github.com/benqcloud/docker-laravel/actions/workflows/php74-apache-workflow.yml)
 [![php81-apache](https://github.com/benqcloud/docker-laravel/actions/workflows/php81-apache-workflow.yml/badge.svg)](https://github.com/benqcloud/docker-laravel/actions/workflows/php81-apache-workflow.yml)
 [![php83-apache](https://github.com/benqcloud/docker-laravel/actions/workflows/php83-apache-workflow.yml/badge.svg)](https://github.com/benqcloud/docker-laravel/actions/workflows/php83-apache-workflow.yml)
+[![php85-apache](https://github.com/benqcloud/docker-laravel/actions/workflows/php85-apache-workflow.yml/badge.svg)](https://github.com/benqcloud/docker-laravel/actions/workflows/php85-apache-workflow.yml)
 
 [![php71-cli](https://github.com/benqcloud/docker-laravel/actions/workflows/php71-cli-workflow.yml/badge.svg)](https://github.com/benqcloud/docker-laravel/actions/workflows/php71-cli-workflow.yml)
 [![php74-cli](https://github.com/benqcloud/docker-laravel/actions/workflows/php74-cli-workflow.yml/badge.svg)](https://github.com/benqcloud/docker-laravel/actions/workflows/php74-cli-workflow.yml)
 [![php81-cli](https://github.com/benqcloud/docker-laravel/actions/workflows/php81-cli-workflow.yml/badge.svg)](https://github.com/benqcloud/docker-laravel/actions/workflows/php81-cli-workflow.yml)
 [![php83-cli](https://github.com/benqcloud/docker-laravel/actions/workflows/php83-cli-workflow.yml/badge.svg)](https://github.com/benqcloud/docker-laravel/actions/workflows/php83-cli-workflow.yml)
+[![php85-cli](https://github.com/benqcloud/docker-laravel/actions/workflows/php85-cli-workflow.yml/badge.svg)](https://github.com/benqcloud/docker-laravel/actions/workflows/php85-cli-workflow.yml)
 
 ## Supported Architectures
 
@@ -21,18 +21,18 @@
 
 ## Feature Table
 
-|     |  php-7.1-apache-dev | php-7.4-apache-dev | php-8.1-apache-dev | php-8.3-apache-dev |
-| :-- | :------------: | :----------------: | :------------: | :----------------: |
-| Build | 2024-11-28 | 2024-11-28 | 2025-12-10 | 2025-12-10 |
-| Laravel | 5.8 / 5.7 / 5.6 / 5.5 | 8 / 7 / 6 | 10 / 9 | 12 / 11 |
-| OS | buster-20191118 | bullseye-2022114 | trixie-20251208 | trixie-20251208 |
-| Apache | v2.4.38 | v2.4.54 | v2.4.65 | v2.4.65 |
-| php | v7.1.33 | v7.4.33 | v8.1.33 | v8.3.28 |
-| php xdebug | v2.9.8 | v3.1.6 | v3.4.7 | v3.4.7 |
-| php composer | v2.2.24 | v2.8.3 | v2.9.2 | v2.9.2 |
-| php mongodb | v1.9.1 | v1.12.1 | v1.21.2 | v1.21.2 |
-| node | v12.22.12 | v14.21.3 | v20.19.6 | v20.19.6 |
-| npm | v6.14.16 | v6.14.18 | v10.8.2 | v10.8.2 |
+|     |  php-7.1-apache-dev | php-7.4-apache-dev | php-8.1-apache-dev | php-8.3-apache-dev | php-8.5-apache-dev |
+| :-- | :------------: | :----------------: | :------------: | :----------------: | :----------------: |
+| Build | 2024-11-28 | 2024-11-28 | 2025-12-10 | 2025-12-10 | N/A |
+| Laravel | 5.8 / 5.7 / 5.6 / 5.5 | 8 / 7 / 6 | 10 / 9 | 13 / 12 / 11 | 13 / 12 / 11 |
+| OS | buster-20191118 | bullseye-2022114 | trixie-20251208 | trixie-20251208 | trixie-20251208 |
+| Apache | v2.4.38 | v2.4.54 | v2.4.65 | v2.4.65 | v2.4.65 |
+| php | v7.1.33 | v7.4.33 | v8.1.33 | v8.3.28 | v8.5.1 |
+| php xdebug | v2.9.8 | v3.1.6 | v3.4.7 | v3.4.7 | | v3.4.7 |
+| php composer | v2.2.24 | v2.8.3 | v2.9.2 | v2.9.2 | | v2.9.2 |
+| php mongodb | v1.9.1 | v1.12.1 | v1.21.2 | v1.21.2 | | v2.1.4 |
+| node | v12.22.12 | v14.21.3 | v20.19.6 | v20.19.6 | | v24.12.0 |
+| npm | v6.14.16 | v6.14.18 | v10.8.2 | v11.6.2 |
 | yarn | v1.22.22 | v1.22.22 | v1.22.22 | v1.22.22 |
 
 ## Usage

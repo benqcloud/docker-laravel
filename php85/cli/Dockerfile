@@ -1,0 +1,55 @@
+FROM php:8.5.1-cli-trixie
+
+LABEL maintainer="Richard Ting"
+
+ARG MONGODB_DRIVER_VERSION=2.1.4
+ARG NODE_MAJOR=24
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends git zlib1g-dev curl libxml2-dev libpng-dev libssl-dev libzip-dev zip unzip \
+    # OpenJDK 21
+    && apt-get install -y --no-install-recommends openjdk-21-jdk \
+    # Laravel required extensions (ctype curl fileinfo json dom mbstring tokenizer xml extensions are already loaded)
+    && docker-php-ext-install bcmath pdo_mysql \
+    # BenQ app required extensions
+    && apt-get install -y --no-install-recommends libicu-dev \
+    && docker-php-ext-install intl opcache sockets zip pcntl \
+    # BenQ app required extension - gd with JPEG support
+    && apt-get install -y --no-install-recommends libjpeg-dev \
+    && docker-php-ext-configure gd --with-jpeg \
+    && docker-php-ext-install gd \
+    # LDAP extension
+    && apt-get install -y --no-install-recommends libldap2-dev \
+    && docker-php-ext-configure ldap --with-libdir=lib/$(uname -m)-linux-gnu/ \
+    && docker-php-ext-install ldap \
+    # APCu extension
+    && pecl install apcu \
+    && docker-php-ext-enable apcu \
+    # MongoDB extension
+    && pecl install "mongodb-${MONGODB_DRIVER_VERSION}"\
+    && docker-php-ext-enable mongodb \
+    # Redis extension
+    && pecl install redis \
+    && docker-php-ext-enable redis \
+    # Prepare php.ini
+    && ln -sf /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini \
+    && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
+    && apt-get dist-clean
+
+ARG PHP_COMPOSER_VERSION=2
+
+RUN curl -sS https://getcomposer.org/installer | php -- --$PHP_COMPOSER_VERSION --install-dir=/usr/bin/ --filename=composer \
+    && apt-get update \
+    && apt-get install -y gnupg \
+    && curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg \
+    && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list \
+    && apt-get update \
+    && apt-get install -y nodejs \
+    && curl -fsSL https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor -o /etc/apt/keyrings/yarnpkg.gpg \
+    && echo "deb [signed-by=/etc/apt/keyrings/yarnpkg.gpg] https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
+    && apt-get update \
+    && apt-get install -y yarn \
+    && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
+    && apt-get dist-clean
