@@ -15,7 +15,7 @@ RUN apt-get update \
     && docker-php-ext-install bcmath pdo_mysql \
     # BenQ app required extensions
     && apt-get install -y --no-install-recommends libicu-dev \
-    && docker-php-ext-install intl opcache sockets zip pcntl \
+    && docker-php-ext-install intl sockets zip pcntl \
     # BenQ app required extension - gd with JPEG support
     && apt-get install -y --no-install-recommends libjpeg-dev \
     && docker-php-ext-configure gd --with-jpeg \
