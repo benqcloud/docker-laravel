@@ -23,16 +23,16 @@
 
 |              |  php-7.1-apache-dev   | php-7.4-apache-dev | php-8.1-apache-dev | php-8.3-apache-dev | php-8.5-apache-dev |
 | ------------ | :-------------------: | :----------------: | :----------------: | :----------------: | :----------------: |
-| Build        | 2024-11-28            | 2024-11-28         | 2026-01-19         | 2026-01-19         | 2026-01-19         |
+| Build        | 2024-11-28            | 2024-11-28         | 2026-01-19         | 2026-03-20         | 2026-03-20         |
 | Laravel      | 5.8 / 5.7 / 5.6 / 5.5 | 8 / 7 / 6          | 10 / 9             | 13 / 12 / 11       | 13 / 12 / 11       | 
-| OS           | buster-20191118       | bullseye-2022114   | trixie-20251229    | trixie-20260112    | trixie-20260112    |
+| OS           | buster-20191118       | bullseye-2022114   | trixie-20251229    | trixie-20260316    | trixie-20260316    |
 | Apache       | v2.4.38               | v2.4.54            | v2.4.65            | v2.4.66            | v2.4.66            |
-| php          | v7.1.33               | v7.4.33            | v8.1.34            | v8.3.30            | v8.5.2             |
-| php xdebug   | v2.9.8                | v3.1.6             | v3.5.0             | v3.5.0             | v3.5.0             |
-| php composer | v2.2.24               | v2.8.3             | v2.9.3             | v2.9.3             | v2.9.3             |
+| php          | v7.1.33               | v7.4.33            | v8.1.34            | v8.3.30            | v8.5.4             |
+| php xdebug   | v2.9.8                | v3.1.6             | v3.5.0             | v3.5.1             | v3.5.1             |
+| php composer | v2.2.24               | v2.8.3             | v2.9.3             | v2.9.5             | v2.9.5             |
 | php mongodb  | v1.9.1                | v1.12.1            | v1.21.2            | v1.21.2            | v2.1.4             |
-| node         | v12.22.12             | v14.21.3           | v20.20.0           | v20.20.0           | v24.13.0           |
-| npm          | v6.14.16              | v6.14.18           | v10.8.2            | v10.8.2            | v11.6.2            |
+| node         | v12.22.12             | v14.21.3           | v20.20.0           | v20.20.1           | v24.14.0           |
+| npm          | v6.14.16              | v6.14.18           | v10.8.2            | v10.8.2            | v11.9.0            |
 | yarn         | v1.22.22              | v1.22.22           | v1.22.22           | v1.22.22           | v1.22.22           |
 
 ## Usage
@@ -44,7 +44,7 @@
 ```docker-compose
 services:
     laravel:
-        image: ghcr.io/benqcloud/docker-laravel:php-8.1-apache-dev
+        image: ghcr.io/benqcloud/docker-laravel:php-8.3-apache-dev
         volumes:
             - ${PWD}:/var/www/html
         working_dir: /var/www/html
@@ -57,7 +57,7 @@ services:
               composer install --optimize-autoloader --no-dev
               apache2-foreground"
         depends_on:
-            - mysql80
+            - mysql84
         labels:
             - "traefik.enable=true"
             - "traefik.http.routers.laravel.rule=Host(`laravel.traefik.me`)"
@@ -67,8 +67,8 @@ services:
         networks:
             - example
 
-    mysql80:
-        image: mysql:8.0
+    mysql84:
+        image: mysql:8.4
         volumes:
             - mysql-data:/var/lib/mysql
         environment:
@@ -136,7 +136,7 @@ docker run --rm \
     -w /var/www/html \
     -p 80:80 \
     --detach \
-    ghcr.io/benqcloud/docker-laravel:php-8.1-apache-dev \
+    ghcr.io/benqcloud/docker-laravel:php-8.3-apache-dev \
     bash -c "groupmod -g $GID www-data && \
     usermod -u $UID -g $GID www-data && \
     composer install --optimize-autoloader --no-dev && \
@@ -151,7 +151,7 @@ docker run --rm \
     -e HOME=/var/www/html \
     -v $(pwd):/var/www/html \
     -w /var/www/html \
-    ghcr.io/benqcloud/docker-laravel:php-8.1-cli \
+    ghcr.io/benqcloud/docker-laravel:php-8.3-cli \
     bash -c "composer install && php vendor/bin/phpunit"
 ```
 
@@ -159,7 +159,7 @@ docker run --rm \
 
 ```dockerfile
 ### builder stage
-FROM ghcr.io/benqcloud/composer:php-8.1 AS composer-builder
+FROM ghcr.io/benqcloud/composer:php-8.3 AS composer-builder
 
 WORKDIR /usr/src/app
 
@@ -167,7 +167,7 @@ COPY . /usr/src/app
 RUN composer install --optimize-autoloader --no-dev --ignore-platform-reqs
 
 ### runtime stage
-FROM ghcr.io/benqcloud/docker-laravel:php-8.1-apache
+FROM ghcr.io/benqcloud/docker-laravel:php-8.3-apache
 
 WORKDIR /var/www/html
 
