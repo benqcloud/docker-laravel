@@ -1,13 +1,14 @@
-FROM php:8.5.4-cli-trixie
+FROM php:8.5.5-cli-trixie
 
 LABEL maintainer="Richard Ting"
 
-ARG MONGODB_DRIVER_VERSION=2.1.4
+ARG MONGODB_DRIVER_VERSION=2.2.1
 ARG NODE_MAJOR=24
 
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update \
+    # Install Laravel required packages
     && apt-get install -y --no-install-recommends git zlib1g-dev curl libxml2-dev libpng-dev libssl-dev libzip-dev zip unzip \
     # OpenJDK 21
     && apt-get install -y --no-install-recommends openjdk-21-jdk \

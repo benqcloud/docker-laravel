@@ -2,11 +2,12 @@ FROM php:8.3.30-apache-trixie
 
 LABEL maintainer="Richard Ting"
 
-ARG MONGODB_DRIVER_VERSION=1.21.2
+ARG MONGODB_DRIVER_VERSION=1.21.5
 
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update \
+    # Install Laravel required packages
     && apt-get install -y --no-install-recommends git zlib1g-dev curl libxml2-dev libpng-dev libssl-dev libzip-dev zip unzip \
     # OpenJDK 21
     && apt-get install -y --no-install-recommends openjdk-21-jdk \

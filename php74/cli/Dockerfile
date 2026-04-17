@@ -2,12 +2,15 @@ FROM php:7.4.33-cli-bullseye
 
 LABEL maintainer="Richard Ting"
 
-ARG MONGODB_DRIVER_VERSION=1.12.1
+ARG MONGODB_DRIVER_VERSION=1.12.5
 ARG NODE_VERSION=14
 
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update \
+    # Manually update debian system packages duo to php:7.4 EOL
+    && apt-get upgrade -y \
+    # Install Laravel required packages
     && apt-get install -y --no-install-recommends git zlib1g-dev curl libxml2-dev libpng-dev libssl-dev libzip-dev zip unzip \
     # Laravel required extensions (ctype curl fileinfo json dom mbstring tokenizer xml extensions are already loaded)
     && docker-php-ext-install bcmath pdo_mysql \
