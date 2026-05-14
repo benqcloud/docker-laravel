@@ -15,7 +15,7 @@ env:
   # github.repository as <account>/<repo>
   IMAGE_NAME: ${{ github.repository }}
   PHP_BRANCH: 8.5
-  PHP_VERSION: 8.5.5
+  PHP_VERSION: 8.5.6
   PHP_VARIANT: cli
   FOLDER: php85
 
