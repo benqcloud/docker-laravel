@@ -1,4 +1,4 @@
-FROM php:8.3.31-apache-trixie
+FROM php:8.3.32-apache-trixie
 
 LABEL maintainer="Richard Ting"
 
@@ -33,6 +33,9 @@ RUN apt-get update \
     # Redis extension
     && pecl install redis \
     && docker-php-ext-enable redis \
+    # Download Amazon RDS & DocumentDB TLS certificate
+    && curl -o /usr/local/share/ca-certificates/aws-ww-rds-global-bundle.pem https://truststore.pki.rds.amazonaws.com/global/global-bundle.pem \
+    && curl -o /usr/local/share/ca-certificates/aws-cn-rds-global-bundle.pem https://rds-truststore.s3.cn-north-1.amazonaws.com.cn/global/global-bundle.pem \
     # Enable apache2 module: headers, rewrite
     && a2enmod headers && a2enmod rewrite \
     # Prepare php.ini
