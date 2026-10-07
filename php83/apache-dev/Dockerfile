@@ -1,6 +1,6 @@
 FROM benqcloud/docker-laravel:php-8.3-apache
 
-ARG NODE_MAJOR=20
+ARG NODE_MAJOR=24
 ARG PHP_COMPOSER_VERSION=2
 
 RUN apt-get update \
@@ -9,7 +9,7 @@ RUN apt-get update \
     && docker-php-ext-enable xdebug \
     # Install composer v2
     && curl -sS https://getcomposer.org/installer | php -- --$PHP_COMPOSER_VERSION --install-dir=/usr/bin/ --filename=composer \
-    # Install Node.js 20
+    # Install Node.js
     && apt-get install -y gnupg \
     && curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg \
     && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list \

@@ -1,9 +1,9 @@
-FROM php:8.3.32-cli-trixie
+FROM php:8.3.35-cli-trixie
 
 LABEL maintainer="Richard Ting"
 
-ARG MONGODB_DRIVER_VERSION=1.21.5
-ARG NODE_MAJOR=20
+ARG MONGODB_DRIVER_VERSION=1.21.10
+ARG NODE_MAJOR=24
 
 ENV DEBIAN_FRONTEND=noninteractive
 
