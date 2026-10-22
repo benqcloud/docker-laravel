@@ -1,4 +1,4 @@
-FROM php:8.3.35-cli-trixie
+FROM php:8.3.36-cli-trixie
 
 LABEL maintainer="Richard Ting"
 
